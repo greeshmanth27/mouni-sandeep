@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import brideImage from "@/assets/bride-portrait.jpg";
+import brideImage from "@/assets/mouni.png";
 import groomImage from "@/assets/Groom.jpg";
 
 const CoupleSection = () => {
