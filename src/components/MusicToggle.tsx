@@ -44,6 +44,37 @@ const MusicToggle = () => {
     };
   }, [isBackgroundMusicPlaying, setBackgroundMusicPlaying, volume]);
 
+  // Best-effort autoplay on first user gesture (browsers often block autoplay)
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const tryPlayOnGesture = () => {
+      const videos = document.getElementsByTagName('video');
+      const isUnmutedVideoPlaying = Array.from(videos).some(video =>
+        !video.paused && !video.ended && !video.muted && video.volume > 0
+      );
+
+      if (isBackgroundMusicPlaying && !isUnmutedVideoPlaying) {
+        audio.volume = volume;
+        audio.play().catch(() => {
+          // ignore - user may toggle manually
+        });
+      }
+
+      window.removeEventListener('pointerdown', tryPlayOnGesture);
+      window.removeEventListener('touchstart', tryPlayOnGesture);
+    };
+
+    window.addEventListener('pointerdown', tryPlayOnGesture, { once: true } as any);
+    window.addEventListener('touchstart', tryPlayOnGesture, { once: true } as any);
+
+    return () => {
+      window.removeEventListener('pointerdown', tryPlayOnGesture);
+      window.removeEventListener('touchstart', tryPlayOnGesture);
+    };
+  }, [isBackgroundMusicPlaying, volume]);
+
   const toggleMusic = () => {
     const videos = document.getElementsByTagName('video');
     const isUnmutedVideoPlaying = Array.from(videos).some(video => 
