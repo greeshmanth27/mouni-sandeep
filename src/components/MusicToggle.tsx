@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Music, VolumeX } from "lucide-react";
 import useAudioControl from "@/hooks/useAudioControl";
-import backgroundMusic from "@/assets/background-music.mp3";
+import backgroundMusic from "@/assets/music.mp3";
 
 const MusicToggle = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
