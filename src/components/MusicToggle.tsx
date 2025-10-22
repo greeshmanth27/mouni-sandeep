@@ -28,7 +28,7 @@ const MusicToggle = () => {
       if (!isUnmutedVideoPlaying) {
         audio.volume = volume;
         audio.play().catch(() => {
-          setBackgroundMusicPlaying(false);
+          // Autoplay may be blocked; will retry on first user gesture
         });
       } else {
         setBackgroundMusicPlaying(false);
@@ -55,11 +55,15 @@ const MusicToggle = () => {
         !video.paused && !video.ended && !video.muted && video.volume > 0
       );
 
-      if (isBackgroundMusicPlaying && !isUnmutedVideoPlaying) {
+      if (!isUnmutedVideoPlaying) {
         audio.volume = volume;
-        audio.play().catch(() => {
-          // ignore - user may toggle manually
-        });
+        audio.play()
+          .then(() => setBackgroundMusicPlaying(true))
+          .catch(() => {
+            // ignore - user may toggle manually
+          });
+      } else {
+        setBackgroundMusicPlaying(false);
       }
 
       window.removeEventListener('pointerdown', tryPlayOnGesture);
@@ -73,7 +77,7 @@ const MusicToggle = () => {
       window.removeEventListener('pointerdown', tryPlayOnGesture);
       window.removeEventListener('touchstart', tryPlayOnGesture);
     };
-  }, [isBackgroundMusicPlaying, volume]);
+  }, [setBackgroundMusicPlaying, volume]);
 
   const toggleMusic = () => {
     const videos = document.getElementsByTagName('video');
