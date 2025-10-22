@@ -9,12 +9,14 @@ import gallery5 from "@/assets/gallery-5.jpg";
 import gallery6 from "@/assets/gallery-6.jpg";
 
 const photos = [
-  { id: 1, src: gallery1, alt: "Pre-wedding photo 1" },
-  { id: 2, src: gallery2, alt: "Pre-wedding photo 2" },
-  { id: 3, src: gallery3, alt: "Pre-wedding photo 3" },
-  { id: 4, src: gallery4, alt: "Pre-wedding photo 4" },
-  { id: 5, src: gallery5, alt: "Pre-wedding photo 5" },
-  { id: 6, src: gallery6, alt: "Pre-wedding photo 6" },
+  { id: 1, src: gallery1, alt: "Family photo 1", category: "family" },
+  { id: 2, src: gallery2, alt: "Family photo 2", category: "family" },
+  { id: 3, src: gallery3, alt: "Pre-wedding photo 1", category: "prewedding" },
+  { id: 4, src: gallery4, alt: "Pre-wedding photo 2", category: "prewedding" },
+  { id: 5, src: gallery5, alt: "Pre-wedding photo 3", category: "prewedding" },
+  { id: 6, src: gallery6, alt: "Pre-wedding photo 4", category: "prewedding" },
+    { id: 7, src: gallery5, alt: "Pre-wedding photo 3", category: "prewedding" },
+  { id: 8, src: gallery6, alt: "Pre-wedding photo 4", category: "prewedding" },
 ];
 
 const GallerySection = () => {
@@ -57,105 +59,60 @@ const GallerySection = () => {
         </motion.div>
 
         {/* Masonry-style grid layout */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-6xl mx-auto">
-          {/* Large photo - spans 2 columns and 2 rows on desktop */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="relative col-span-2 row-span-2 aspect-square md:aspect-auto overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[0].id)}
-          >
-            <img
-              src={photos[0].src}
-              alt={photos[0].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
+        <div className="space-y-12 max-w-6xl mx-auto">
+          {/* Family Photos Section */}
+          <div className="space-y-4">
+            <h3 className="font-script text-3xl text-secondary text-center">Family Photos</h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {photos
+                .filter(photo => photo.category === "family")
+                .map(photo => (
+                  <motion.div
+                    key={photo.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="relative aspect-[4/3] overflow-hidden rounded-lg shadow-lg cursor-pointer group"
+                    onClick={() => openLightbox(photo.id)}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                ))}
+            </div>
+          </div>
 
-          {/* Two tall photos on the right */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="relative col-span-2 md:col-span-1 aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[1].id)}
-          >
-            <img
-              src={photos[1].src}
-              alt={photos[1].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="relative col-span-2 md:col-span-1 aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[2].id)}
-          >
-            <img
-              src={photos[2].src}
-              alt={photos[2].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
-
-          {/* Three photos in the bottom row */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-            className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[3].id)}
-          >
-            <img
-              src={photos[3].src}
-              alt={photos[3].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[4].id)}
-          >
-            <img
-              src={photos[4].src}
-              alt={photos[4].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.5 }}
-            className="relative col-span-2 md:col-span-1 aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
-            onClick={() => openLightbox(photos[5].id)}
-          >
-            <img
-              src={photos[5].src}
-              alt={photos[5].alt}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </motion.div>
+          {/* Pre-wedding Photos Section */}
+          <div className="space-y-4">
+            <h3 className="font-script text-3xl text-secondary text-center">Pre-wedding Photos</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {photos
+                .filter(photo => photo.category === "prewedding")
+                .map(photo => (
+                  <motion.div
+                    key={photo.id}
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5 }}
+                    className="relative aspect-square overflow-hidden rounded-lg shadow-lg cursor-pointer group"
+                    onClick={() => openLightbox(photo.id)}
+                  >
+                    <img
+                      src={photo.src}
+                      alt={photo.alt}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-secondary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                  </motion.div>
+                ))}
+            </div>
+          </div>
         </div>
 
         {/* Lightbox */}

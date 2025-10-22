@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import brideImage from "@/assets/bride-portrait.jpg";
-import groomImage from "@/assets/groom-portrait.jpg";
+import groomImage from "@/assets/Groom.jpg";
 
 const CoupleSection = () => {
   return (
@@ -42,9 +42,7 @@ const CoupleSection = () => {
               Mounika
             </h3>
             <p className="font-elegant text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A radiant soul with a heart full of dreams and grace. Her smile lights up every room, 
-              and her kindness touches every heart. She believes in love that transcends time and 
-              celebrates life with boundless joy.
+              A devoted duty doctor, her compassion flows like a gentle melody — calm, pure, and full of grace. With a heart brimming with kindness and an innocent smile that soothes every soul, she turns moments into memories of warmth. Her tender spirit shines through in every act of care, a quiet promise to heal, to love, and to make the world a little more beautiful with her presence.
             </p>
           </motion.div>
 
@@ -68,9 +66,7 @@ const CoupleSection = () => {
               Sandeep
             </h3>
             <p className="font-elegant text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-              A gentle spirit with unwavering strength and warmth. His laughter is contagious, 
-              and his dedication to those he loves is endless. He cherishes tradition while 
-              embracing new adventures with open arms.
+              Working as a Formulation Specialist at Dr. Reddy’s Laboratories, he carries a quiet grace that speaks through his dedication and humility. With a calm heart and a sincere spirit, he approaches life with kindness and purpose. His innocence and warmth make him a man of gentle strength — one whose presence brings peace and love to everyone around him.
             </p>
           </motion.div>
         </div>
@@ -85,10 +81,7 @@ const CoupleSection = () => {
         >
           <h3 className="font-serif text-3xl text-secondary mb-6">Our Story</h3>
           <p className="font-elegant text-base text-muted-foreground leading-relaxed">
-            Their paths crossed on a starlit evening in Jaipur, where destiny wove their stories together. 
-            What began as a chance meeting blossomed into a love story filled with laughter, 
-            understanding, and countless precious moments. Through seasons of joy and challenges, 
-            their bond grew stronger, and now they stand ready to embark on life's greatest adventure together.
+            Their paths crossed on a starlit evening in Ongole, where destiny softly intertwined their hearts. What began as a simple connection soon blossomed into a bond filled with care, laughter, and endless understanding. With each passing moment, their love grew deeper and truer — guiding them toward this beautiful new chapter of togetherness.
           </p>
         </motion.div>
       </div>

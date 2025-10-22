@@ -1,6 +1,36 @@
 import { motion } from "framer-motion";
+import InviteVideo from "@/assets/Invite.mp4";
+import useAudioControl from "@/hooks/useAudioControl";
+import { useRef } from "react";
 
 const VideoSection = () => {
+  const { setBackgroundMusicPlaying } = useAudioControl();
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const handleVideoPlay = () => {
+    if (videoRef.current && !videoRef.current.muted) {
+      setBackgroundMusicPlaying(false);
+    }
+  };
+
+  const handleVideoPause = () => {
+    setBackgroundMusicPlaying(true);
+  };
+
+  const handleVideoEnded = () => {
+    setBackgroundMusicPlaying(true);
+  };
+
+  const handleVolumeChange = () => {
+    if (videoRef.current) {
+      if (videoRef.current.muted || videoRef.current.volume === 0) {
+        setBackgroundMusicPlaying(true);
+      } else {
+        setBackgroundMusicPlaying(false);
+      }
+    }
+  };
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -27,18 +57,20 @@ const VideoSection = () => {
           className="max-w-4xl mx-auto"
         >
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl border-4 border-primary/20">
-            {/* Placeholder for video - Replace with actual YouTube/Vimeo embed */}
-            <iframe
-              className="w-full h-full"
-              src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-              title="Pre-wedding video"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            />
+            <video
+              ref={videoRef}
+              className="w-full h-full object-cover"
+              controls
+              playsInline
+              onPlay={handleVideoPlay}
+              onPause={handleVideoPause}
+              onEnded={handleVideoEnded}
+              onVolumeChange={handleVolumeChange}
+            >
+              <source src={InviteVideo} type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
-          <p className="text-center mt-4 font-elegant text-sm text-muted-foreground">
-            Replace the video URL above with your actual pre-wedding or engagement video
-          </p>
         </motion.div>
       </div>
     </section>

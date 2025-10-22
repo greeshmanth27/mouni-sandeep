@@ -1,40 +1,62 @@
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Music, VolumeX } from "lucide-react";
+import useAudioControl from "@/hooks/useAudioControl";
+import backgroundMusic from "@/assets/background-music.mp3";
 
 const MusicToggle = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const { isBackgroundMusicPlaying, setBackgroundMusicPlaying, volume, setVolume } = useAudioControl();
 
   useEffect(() => {
-    // Autoplay music when component mounts
-    if (audioRef.current) {
-      audioRef.current.volume = 0.3;
-      
-      // Attempt to autoplay
-      const playPromise = audioRef.current.play();
-      
-      if (playPromise !== undefined) {
-        playPromise.catch((error) => {
-          // Autoplay was prevented, user will need to click play
-          console.log("Autoplay prevented:", error);
-          setIsPlaying(false);
-        });
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        audio.pause();
+        setBackgroundMusicPlaying(false);
       }
+    };
+
+    if (isBackgroundMusicPlaying) {
+      const videos = document.getElementsByTagName('video');
+      const isUnmutedVideoPlaying = Array.from(videos).some(video => 
+        !video.paused && !video.ended && !video.muted && video.volume > 0
+      );
+
+      if (!isUnmutedVideoPlaying) {
+        audio.volume = volume;
+        audio.play().catch(() => {
+          setBackgroundMusicPlaying(false);
+        });
+      } else {
+        setBackgroundMusicPlaying(false);
+      }
+    } else {
+      audio.pause();
     }
-  }, []);
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+    };
+  }, [isBackgroundMusicPlaying, setBackgroundMusicPlaying, volume]);
 
   const toggleMusic = () => {
-    if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause();
-      } else {
-        audioRef.current.play().catch(err => {
-          console.log("Audio playback failed:", err);
-        });
-      }
-      setIsPlaying(!isPlaying);
+    const videos = document.getElementsByTagName('video');
+    const isUnmutedVideoPlaying = Array.from(videos).some(video => 
+      !video.paused && !video.ended && !video.muted && video.volume > 0
+    );
+
+    if (isUnmutedVideoPlaying) {
+      Array.from(videos).forEach(video => {
+        video.pause();
+      });
     }
+
+    setBackgroundMusicPlaying(!isBackgroundMusicPlaying);
   };
 
   return (
@@ -45,14 +67,13 @@ const MusicToggle = () => {
         transition={{ delay: 1 }}
         onClick={toggleMusic}
         className="fixed bottom-6 right-6 z-50 bg-gradient-rose-gold text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform"
-        aria-label={isPlaying ? "Pause music" : "Play music"}
+        aria-label={isBackgroundMusicPlaying ? "Pause music" : "Play music"}
       >
-        {isPlaying ? <Music size={24} /> : <VolumeX size={24} />}
+        {isBackgroundMusicPlaying ? <Music size={24} /> : <VolumeX size={24} />}
       </motion.button>
 
       <audio ref={audioRef} loop>
-        {/* Add your wedding music file here */}
-        {/* <source src="/path-to-your-music.mp3" type="audio/mpeg" /> */}
+        <source src={backgroundMusic} type="audio/mpeg" />
       </audio>
     </>
   );
