@@ -8,7 +8,7 @@ const VideoSection = () => {
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const handleVideoPlay = () => {
-    if (videoRef.current && !videoRef.current.muted) {
+    if (videoRef.current && !videoRef.current.muted && videoRef.current.volume > 0) {
       setBackgroundMusicPlaying(false);
     }
   };
@@ -23,9 +23,11 @@ const VideoSection = () => {
 
   const handleVolumeChange = () => {
     if (videoRef.current) {
+      const isVideoPlaying = !videoRef.current.paused && !videoRef.current.ended;
+      
       if (videoRef.current.muted || videoRef.current.volume === 0) {
         setBackgroundMusicPlaying(true);
-      } else {
+      } else if (isVideoPlaying) {
         setBackgroundMusicPlaying(false);
       }
     }
