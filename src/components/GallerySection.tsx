@@ -461,18 +461,22 @@ const useTypewriter = (text: string, speed = 100) => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
+    if (!text) return;
+    
     setDisplayed("");
     setIsComplete(false);
     let i = 0;
+    
     const interval = setInterval(() => {
       if (i < text.length) {
-        setDisplayed((prev) => prev + text[i]);
+        setDisplayed(text.substring(0, i + 1));
         i++;
       } else {
         setIsComplete(true);
         clearInterval(interval);
       }
     }, speed);
+    
     return () => clearInterval(interval);
   }, [text, speed]);
 
