@@ -6,91 +6,59 @@ import backgroundMusic from "@/assets/music.mp3";
 
 const MusicToggle = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { isBackgroundMusicPlaying, setBackgroundMusicPlaying, volume, setVolume } = useAudioControl();
+  const { 
+    isBackgroundMusicPlaying, 
+    setBackgroundMusicPlaying, 
+    volume,
+    hasUserInteracted,
+    setUserInteracted 
+  } = useAudioControl();
 
+  // Handle initial autoplay
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        audio.pause();
-        setBackgroundMusicPlaying(false);
+    const handleUserInteraction = () => {
+      if (!hasUserInteracted) {
+        setUserInteracted(true);
+        if (isBackgroundMusicPlaying) {
+          audio.play().catch(console.error);
+        }
       }
     };
 
-    if (isBackgroundMusicPlaying) {
-      const videos = document.getElementsByTagName('video');
-      const isUnmutedVideoPlaying = Array.from(videos).some(video => 
-        !video.paused && !video.ended && !video.muted && video.volume > 0
-      );
-
-      if (!isUnmutedVideoPlaying) {
-        audio.volume = volume;
-        audio.play().catch(() => {
-          // Autoplay may be blocked; will retry on first user gesture
-        });
-      } else {
-        setBackgroundMusicPlaying(false);
-      }
-    } else {
-      audio.pause();
-    }
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-    };
-  }, [isBackgroundMusicPlaying, setBackgroundMusicPlaying, volume]);
-
-  // Best-effort autoplay on first user gesture (browsers often block autoplay)
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const tryPlayOnGesture = () => {
-      const videos = document.getElementsByTagName('video');
-      const isUnmutedVideoPlaying = Array.from(videos).some(video =>
-        !video.paused && !video.ended && !video.muted && video.volume > 0
-      );
-
-      if (!isUnmutedVideoPlaying) {
-        audio.volume = volume;
-        audio.play()
-          .then(() => setBackgroundMusicPlaying(true))
-          .catch(() => {
-            // ignore - user may toggle manually
-          });
-      } else {
-        setBackgroundMusicPlaying(false);
-      }
-
-      window.removeEventListener('pointerdown', tryPlayOnGesture);
-      window.removeEventListener('touchstart', tryPlayOnGesture);
-    };
-
-    window.addEventListener('pointerdown', tryPlayOnGesture, { once: true } as any);
-    window.addEventListener('touchstart', tryPlayOnGesture, { once: true } as any);
-
-    return () => {
-      window.removeEventListener('pointerdown', tryPlayOnGesture);
-      window.removeEventListener('touchstart', tryPlayOnGesture);
-    };
-  }, [setBackgroundMusicPlaying, volume]);
-
-  const toggleMusic = () => {
-    const videos = document.getElementsByTagName('video');
-    const isUnmutedVideoPlaying = Array.from(videos).some(video => 
-      !video.paused && !video.ended && !video.muted && video.volume > 0
-    );
-
-    if (isUnmutedVideoPlaying) {
-      Array.from(videos).forEach(video => {
-        video.pause();
+    // Try autoplaying immediately
+    if (!hasUserInteracted) {
+      audio.play().then(() => {
+        setUserInteracted(true);
+      }).catch(() => {
+        // Autoplay failed, wait for user interaction
+        document.addEventListener('click', handleUserInteraction, { once: true });
+        document.addEventListener('touchstart', handleUserInteraction, { once: true });
       });
     }
 
+    return () => {
+      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', handleUserInteraction);
+    };
+  }, [hasUserInteracted, isBackgroundMusicPlaying, setUserInteracted]);
+
+  // Handle music state changes
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio || !hasUserInteracted) return;
+
+    if (isBackgroundMusicPlaying) {
+      audio.volume = volume;
+      audio.play().catch(console.error);
+    } else {
+      audio.pause();
+    }
+  }, [isBackgroundMusicPlaying, volume, hasUserInteracted]);
+
+  const toggleMusic = () => {
     setBackgroundMusicPlaying(!isBackgroundMusicPlaying);
   };
 
@@ -107,7 +75,7 @@ const MusicToggle = () => {
         {isBackgroundMusicPlaying ? <Music size={24} /> : <VolumeX size={24} />}
       </motion.button>
 
-      <audio ref={audioRef} loop>
+      <audio ref={audioRef} loop preload="auto">
         <source src={backgroundMusic} type="audio/mpeg" />
       </audio>
     </>

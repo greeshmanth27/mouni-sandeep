@@ -87,7 +87,7 @@ const HeroSection = () => {
 
   useEffect(() => {
     // Generate hearts with random properties
-    const generatedHearts = Array.from({ length: 20 }).map((_, i) => ({
+    const generatedHearts = Array.from({ length: 40 }).map((_, i) => ({
       id: i,
       left: Math.random() * 100,
       size: Math.random() * 30 + 15,
