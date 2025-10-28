@@ -14,36 +14,46 @@ const MusicToggle = () => {
     setUserInteracted 
   } = useAudioControl();
 
-  // Handle initial autoplay
+  // Auto-play on page load
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handleUserInteraction = () => {
-      if (!hasUserInteracted) {
+    const playAudio = async () => {
+      try {
+        audio.volume = volume;
+        await audio.play();
         setUserInteracted(true);
-        if (isBackgroundMusicPlaying) {
-          audio.play().catch(console.error);
-        }
+      } catch (error) {
+        console.log("Autoplay prevented, waiting for user interaction");
+        
+        const handleInteraction = async () => {
+          if (!hasUserInteracted) {
+            try {
+              await audio.play();
+              setUserInteracted(true);
+            } catch (err) {
+              console.error("Failed to play audio:", err);
+            }
+          }
+        };
+
+        document.addEventListener('click', handleInteraction, { once: true });
+        document.addEventListener('touchstart', handleInteraction, { once: true });
+        document.addEventListener('keydown', handleInteraction, { once: true });
       }
     };
 
-    // Try autoplaying immediately
-    if (!hasUserInteracted) {
-      audio.play().then(() => {
-        setUserInteracted(true);
-      }).catch(() => {
-        // Autoplay failed, wait for user interaction
-        document.addEventListener('click', handleUserInteraction, { once: true });
-        document.addEventListener('touchstart', handleUserInteraction, { once: true });
-      });
+    if (isBackgroundMusicPlaying && !hasUserInteracted) {
+      playAudio();
     }
 
     return () => {
-      document.removeEventListener('click', handleUserInteraction);
-      document.removeEventListener('touchstart', handleUserInteraction);
+      document.removeEventListener('click', playAudio);
+      document.removeEventListener('touchstart', playAudio);
+      document.removeEventListener('keydown', playAudio);
     };
-  }, [hasUserInteracted, isBackgroundMusicPlaying, setUserInteracted]);
+  }, []);
 
   // Handle music state changes
   useEffect(() => {
