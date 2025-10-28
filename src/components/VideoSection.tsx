@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import InviteVideo from "@/assets/mounika and  sandeep-engagement teaser.mp4";
+import InviteVideo from "@/assets/Invite.mp4";
 import useAudioControl from "@/hooks/useAudioControl";
 import { useRef } from "react";
 
