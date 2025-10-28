@@ -74,12 +74,34 @@
 
 import { ChevronDown } from "lucide-react";
 import heroImage from "@/assets/hero-couple.jpg";
+import { useEffect, useState } from "react";
 
 const HeroSection = () => {
   const scrollToNext = () => {
     const element = document.getElementById("countdown");
     element?.scrollIntoView({ behavior: "smooth" });
   };
+
+  const [hearts, setHearts] = useState<Array<{
+    id: number;
+    left: number;
+    size: number;
+    duration: number;
+    delay: number;
+    rotate: number;
+  }>>([]);
+
+  useEffect(() => {
+    const generatedHearts = Array.from({ length: 30 }).map((_, i) => ({
+      id: i,
+      left: Math.random() * 100,
+      size: Math.random() * 25 + 15,
+      duration: Math.random() * 8 + 10,
+      delay: Math.random() * 5,
+      rotate: Math.random() * 360,
+    }));
+    setHearts(generatedHearts);
+  }, []);
 
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
@@ -89,6 +111,24 @@ const HeroSection = () => {
         style={{ backgroundImage: `url(${heroImage})` }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-background/90" />
+      </div>
+
+      {/* Floating Hearts Animation */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {hearts.map((heart) => (
+          <div
+            key={heart.id}
+            className="absolute text-pink-400 animate-float-up"
+            style={{
+              left: `${heart.left}%`,
+              fontSize: `${heart.size}px`,
+              filter: "drop-shadow(0 0 6px rgba(255,192,203,0.6))",
+              animation: `float-up ${heart.duration}s ease-in-out ${heart.delay}s infinite`,
+            }}
+          >
+            ❤️
+          </div>
+        ))}
       </div>
 
       {/* Content */}
@@ -113,7 +153,7 @@ const HeroSection = () => {
       {/* Scroll Indicator */}
       <button
         onClick={scrollToNext}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white cursor-pointer hover:text-primary transition-colors animate-bounce"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white cursor-pointer hover:text-primary transition-colors animate-bounce z-20"
         aria-label="Scroll down"
       >
         <ChevronDown size={40} />

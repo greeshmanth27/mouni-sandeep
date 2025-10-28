@@ -19,41 +19,30 @@ const MusicToggle = () => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const playAudio = async () => {
-      try {
-        audio.volume = volume;
-        await audio.play();
-        setUserInteracted(true);
-      } catch (error) {
-        console.log("Autoplay prevented, waiting for user interaction");
-        
-        const handleInteraction = async () => {
-          if (!hasUserInteracted) {
-            try {
-              await audio.play();
-              setUserInteracted(true);
-            } catch (err) {
-              console.error("Failed to play audio:", err);
-            }
-          }
-        };
-
-        document.addEventListener('click', handleInteraction, { once: true });
-        document.addEventListener('touchstart', handleInteraction, { once: true });
-        document.addEventListener('keydown', handleInteraction, { once: true });
-      }
+    // Set volume and play immediately
+    audio.volume = volume;
+    audio.muted = false;
+    
+    // Attempt to play as soon as possible
+    const playAudio = () => {
+      audio.play()
+        .then(() => {
+          setUserInteracted(true);
+          console.log("Audio playing automatically");
+        })
+        .catch((error) => {
+          console.log("Autoplay blocked, will retry on interaction:", error);
+        });
     };
 
-    if (isBackgroundMusicPlaying && !hasUserInteracted) {
-      playAudio();
-    }
+    // Try to play immediately
+    playAudio();
 
-    return () => {
-      document.removeEventListener('click', playAudio);
-      document.removeEventListener('touchstart', playAudio);
-      document.removeEventListener('keydown', playAudio);
-    };
-  }, []);
+    // Backup: try again after a short delay
+    const timeoutId = setTimeout(playAudio, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [volume, setUserInteracted]);
 
   // Handle music state changes
   useEffect(() => {
