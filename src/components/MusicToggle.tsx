@@ -1,8 +1,9 @@
 import { useRef, useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Music, VolumeX, Play } from "lucide-react";
+import { Music, VolumeX } from "lucide-react";
 import useAudioControl from "@/hooks/useAudioControl";
 import backgroundMusic from "@/assets/music.mp3";
+import vinayaka from "@/assets/LORD.jpg";
 
 const MusicToggle = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -64,7 +65,7 @@ const MusicToggle = () => {
               className="bg-white/95 p-8 rounded-2xl shadow-2xl text-center max-w-sm mx-4"
             >
               <div className="bg-gradient-rose-gold text-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Play size={32} />
+                <img src={vinayaka} alt="Vinayaka" className="w-12 h-12 object-cover rounded-full" />
               </div>
               <h3 className="text-2xl font-playfair font-semibold text-gray-800 mb-2">
                 Welcome to Our Wedding
