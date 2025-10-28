@@ -154,7 +154,7 @@ const VideoSection = () => {
               onEnded={handleVideoEnded}
               onVolumeChange={handleVolumeChange}
             >
-              <source src="src/assets/Invite.mp4" type="video/mp4" />
+              <source src="@/assets/Invite.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
