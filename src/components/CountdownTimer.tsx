@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const CountdownTimer = () => {
-  const weddingDate = new Date("2025-11-13T00:00:00").getTime();
-  
+  // const weddingDate = new Date("2025-11-13T00:00:00").getTime();
+  const weddingDate = new Date(2025, 10, 13, 21, 24, 0).getTime();  
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
