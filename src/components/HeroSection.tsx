@@ -138,10 +138,10 @@ const HeroSection = () => {
         </h1>
 
         <div className="space-y-2">
-          <p className="font-elegant text-xl sm:text-2xl md:text-3xl text-white/95">
+          <p className="font-elegant text-xl sm:text-2xl md:text-3xl text-white/100">
             are getting married
           </p>
-          <p className="font-serif text-xl sm:text-2xl text-primary font-semibold">
+          <p className="font-serif text-xl sm:text-2xl text-[#c75146] font-bold">
             November 13<sup>th</sup>, 2025
           </p>
           <p className="font-elegant text-lg sm:text-xl md:text-2xl text-white/90">

@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import brideImage from "@/assets/mouni.png";
+import brideImage from "@/assets/mouni.jpg";
 import groomImage from "@/assets/Groom.jpg";
+import coupleimage from "@/assets/gallery-4.jpg";
 
 const CoupleSection = () => {
   return (
@@ -31,12 +32,14 @@ const CoupleSection = () => {
             className="text-center"
           >
             <div className="relative mb-6 group">
-              <div className="absolute inset-0 bg-gradient-rose-gold rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
-              <img
-                src={brideImage}
-                alt="Meera - The Bride"
-                className="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mx-auto shadow-2xl border-4 border-primary/30 group-hover:scale-105 transition-transform duration-500"
-              />
+              <div className="absolute inset-0 bg-gradient-rose-gold rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
+              <div className="relative mx-auto w-full max-w-xs md:max-w-sm overflow-hidden rounded-2xl shadow-2xl border-4 border-primary/30">
+                <img
+                  src={brideImage}
+                  alt="Mounika - The Bride"
+                  className="w-full h-[420px] md:h-[520px] object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </div>
             <h3 className="font-script text-4xl md:text-5xl text-secondary mb-3">
               Mounika
@@ -55,12 +58,14 @@ const CoupleSection = () => {
             className="text-center"
           >
             <div className="relative mb-6 group">
-              <div className="absolute inset-0 bg-gradient-maroon rounded-full blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
-              <img
-                src={groomImage}
-                alt="Aarav - The Groom"
-                className="relative w-64 h-64 md:w-80 md:h-80 rounded-full object-cover mx-auto shadow-2xl border-4 border-secondary/30 group-hover:scale-105 transition-transform duration-500"
-              />
+              <div className="absolute inset-0 bg-gradient-maroon rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
+              <div className="relative mx-auto w-full max-w-xs md:max-w-sm overflow-hidden rounded-2xl shadow-2xl border-4 border-secondary/30">
+                <img
+                  src={groomImage}
+                  alt="Sandeep - The Groom"
+                  className="w-full h-[420px] md:h-[520px] object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             </div>
             <h3 className="font-script text-4xl md:text-5xl text-secondary mb-3">
               Sandeep
@@ -79,6 +84,16 @@ const CoupleSection = () => {
           transition={{ duration: 0.7, delay: 0.2 }}
           className="mt-20 text-center max-w-3xl mx-auto"
         >
+          <div className="relative mb-6 group">
+              <div className="absolute inset-0 bg-gradient-maroon rounded-2xl blur-2xl opacity-30 group-hover:opacity-50 transition-opacity" />
+              <div className="relative mx-auto w-full max-w-xs md:max-w-sm overflow-hidden rounded-2xl shadow-2xl border-4 border-secondary/30">
+                <img
+                  src={coupleimage}
+                  alt="Sandeep - The Groom"
+                  className="w-full h-[420px] md:h-[520px] object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+            </div>
           <h3 className="font-serif text-3xl text-secondary mb-6">Our Story</h3>
           <p className="font-elegant text-base text-muted-foreground leading-relaxed">
             Their paths crossed on a starlit evening in Ongole, where destiny softly intertwined their hearts. What began as a simple connection soon blossomed into a bond filled with care, laughter, and endless understanding. With each passing moment, their love grew deeper and truer — guiding them toward this beautiful new chapter of togetherness.
