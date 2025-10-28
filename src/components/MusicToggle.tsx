@@ -70,13 +70,13 @@ const MusicToggle = () => {
                 Welcome to Our Wedding
               </h3>
               <p className="text-gray-600 mb-6">
-                Click to start the celebration with music
+                Click to start the celebration with your Blessings.
               </p>
               <button
                 onClick={handleStartMusic}
                 className="bg-gradient-rose-gold text-white px-8 py-3 rounded-full hover:scale-105 transition-transform font-semibold"
               >
-                Start Music
+                Open
               </button>
             </motion.div>
           </motion.div>
