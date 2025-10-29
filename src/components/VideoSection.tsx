@@ -68,7 +68,7 @@ const VideoSection = () => {
               onEnded={handleVideoEnded}
               onVolumeChange={handleVolumeChange}
             >
-              <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dmny9qnh5/video/upload/v1761714992/mounika_and_sandeep-engagement_teaser_dd4c87.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
