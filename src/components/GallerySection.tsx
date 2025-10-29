@@ -423,7 +423,7 @@
 
 import couple1 from "@/assets/gallery-3.jpg";
 import couple2 from "@/assets/gallery-4.jpg";
-import couple3 from "@/assets/gallery-5.jpg";
+import couple3 from "@/assets/img.jpg";
 import couple4 from "@/assets/gallery-6.jpg";
 import family1 from "@/assets/family-1.jpg";
 import family2 from "@/assets/family-2.jpg";
