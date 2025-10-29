@@ -1,7 +1,4 @@
 import { motion } from "framer-motion";
-import InviteVideo from "@/assets/Invite.mp4";
-// const InviteVideo = "https://drive.google.com/uc?export=download&id=1R7fo8g8JAThByZHER_2Gl5jS8tBaUJN7";
-
 import useAudioControl from "@/hooks/useAudioControl";
 import { useRef } from "react";
 
@@ -71,7 +68,7 @@ const VideoSection = () => {
               onEnded={handleVideoEnded}
               onVolumeChange={handleVolumeChange}
             >
-              <source src={InviteVideo} type="video/mp4" />
+              <source src="/Invite.mp4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
           </div>
