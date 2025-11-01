@@ -71,7 +71,7 @@ const CoupleSection = () => {
               Sandeep
             </h3>
             <p className="font-elegant text-base text-muted-foreground leading-relaxed max-w-md mx-auto">
-              Working as a Formulation Specialist at Dr. Reddy’s Laboratories, he carries a quiet grace that speaks through his dedication and humility. With a calm heart and a sincere spirit, he approaches life with kindness and purpose. His innocence and warmth make him a man of gentle strength — one whose presence brings peace and love to everyone around him.
+              Working as a Formulation Scientist at Dr. Reddy’s Laboratories, he carries a quiet grace that speaks through his dedication and humility. With a calm heart and a sincere spirit, he approaches life with kindness and purpose. His innocence and warmth make him a man of gentle strength — one whose presence brings peace and love to everyone around him.
             </p>
           </motion.div>
         </div>
